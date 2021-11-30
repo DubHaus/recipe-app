@@ -1,28 +1,18 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {MaterialIcons} from '@expo/vector-icons';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Home from './pages/home';
-import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Button} from 'react-native-elements';
-import {cardsItems} from './data';
 import RecipeStack from './pages/recipe/recipeStack';
 
 import Header from './components/header';
 import Title from './components/typography/title';
 import {StyleSheet} from 'react-native';
+import {RootStackParamList} from './types/navigation';
 
 export type TMaterialIcons = keyof typeof MaterialIcons.glyphMap;
-export type RootStackParamList = {
-    home: {};
-    explore: {};
-    saved: {};
-    myRecipes: {};
-    recipe: {
-        id: string;
-    };
-    step: {};
-};
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 

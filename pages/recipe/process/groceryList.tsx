@@ -5,11 +5,11 @@ import {MaterialIcons} from '@expo/vector-icons';
 
 import {cardsItems, measures, TgroceryListItem} from '../../../data';
 import MainTemplate from '../../../templates/main';
-import {ProcessStackParamList} from './processStack';
 import Row from '../../../components/row';
 import Checkbox from '../../../components/checkbox';
 import Title from '../../../components/typography/title';
 import Button from '../../../components/button/button';
+import { ProcessStackParamList } from '../../../types/navigation';
 
 type Props = NativeStackScreenProps<ProcessStackParamList, 'groceryList'>;
 
@@ -30,12 +30,14 @@ const GroceryList = ({
 
     return (
         <MainTemplate>
-            {groceryListParts.map(({title, list}) => (
-                <View style={{marginBottom: 20}}>
+            {groceryListParts.map(({title, list}, idx) => (
+                <View key={idx} style={{marginBottom: 20}}>
                     <Title style={{marginBottom: 15}} size="h4">
                         {title}
                     </Title>
-                    {list.map(GroceryListItem)}
+                    {list.map((props, idx) => (
+                        <GroceryListItem key={idx} {...props} />
+                    ))}
                 </View>
             ))}
             <Button

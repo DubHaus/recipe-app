@@ -9,8 +9,9 @@ import Title from '../components/typography/title';
 import {cardsItems} from '../data';
 import Column from '../components/layout/column';
 import {TMaterialIcons} from '../App';
+import {RootStackParamList} from '../types/navigation';
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<RootStackParamList>();
 
 const iconsToPages = {
     home: 'home',
@@ -26,7 +27,7 @@ const HomeComponent = () => {
                 <Title size="h4">Последние рецепты</Title>
                 <View style={styles.items}>
                     {Object.values(cardsItems).map(el => (
-                        <Column size={3}>
+                        <Column key={el.id} size={3}>
                             <Card key={el.id} id={el.id} title={el.title} />
                         </Column>
                     ))}
@@ -39,11 +40,9 @@ const HomeComponent = () => {
 const Home = () => {
     return (
         <Tab.Navigator
-            screenOptions={({route, navigation}) => {
-                const {routeNames, index} = navigation.getState();
-                const active = routeNames[index];
+            screenOptions={({route}) => {
                 return {
-                    tabBarIcon: ({focused, color, size}) => (
+                    tabBarIcon: () => (
                         <MaterialIcons
                             size={28}
                             name={iconsToPages[route.name]}

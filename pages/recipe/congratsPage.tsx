@@ -4,10 +4,8 @@ import {View} from 'react-native';
 import Title from '../../components/typography/title';
 import Button from '../../components/button/button';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {ProcessStackParamList} from './process/processStack';
-import {RecipeStackParamList} from './recipeStack';
-import Wrapper from '../../components/layout/wrapper';
 import MainTemplate from '../../templates/main';
+import { RecipeStackParamList } from '../../types/navigation';
 
 type Props = NativeStackScreenProps<RecipeStackParamList, 'congrats'>;
 

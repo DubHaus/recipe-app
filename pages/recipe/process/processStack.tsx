@@ -2,14 +2,9 @@ import {
     createDrawerNavigator,
     DrawerContentComponentProps,
     DrawerContentScrollView,
-    DrawerItem,
 } from '@react-navigation/drawer';
-import {
-    createNativeStackNavigator,
-    NativeStackScreenProps,
-} from '@react-navigation/native-stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
-import {RootStackParamList} from '../../../App';
 import GroceryList from './groceryList';
 import RecipeStep from './recipeStep';
 import {MaterialIcons} from '@expo/vector-icons';
@@ -20,26 +15,15 @@ import {Pressable, StyleSheet, View} from 'react-native';
 import {Button, Text} from 'react-native-elements';
 import IconButton from '../../../components/button/iconButton';
 import {cardsItems} from '../../../data';
-import {useRoute} from '@react-navigation/core';
+import {RouteProp, useRoute} from '@react-navigation/core';
 import Row from '../../../components/row';
-import CongratsPage from '../congratsPage';
-
-export type ProcessStackParamList = {
-    groceryList: {
-        id: string;
-    };
-    step: {
-        id: string;
-        stepIdx: number;
-        part?: string;
-    };
-    congrats: {
-        id: string;
-    };
-};
+import {
+    ProcessStackParamList,
+    RecipeStackParamList,
+    RootStackParamList,
+} from '../../../types/navigation';
 
 const Drawer = createDrawerNavigator<ProcessStackParamList>();
-const Stack = createNativeStackNavigator<ProcessStackParamList>();
 
 const MenuItem = ({
     title,
@@ -68,29 +52,27 @@ const MenuItem = ({
 
 const CustomDrawerContent = ({
     navigation,
-    id,
-    stepIdx,
-    part,
+    state,
     ...props
-}: DrawerContentComponentProps & {
-    id: string;
-    stepIdx: number;
-    part: string;
-}) => {
-    const {parts} = cardsItems[id];
+}: DrawerContentComponentProps) => {
+    const {
+        name,
+        params: {id, part, stepIdx = 0},
+    } = state.routes[state.index];
+    const {parts} = cardsItems['1'];
     return (
         <DrawerContentScrollView
             style={{paddingVertical: 20, paddingHorizontal: 5}}
             {...props}>
             <MenuItem
                 title="Список продуктов"
-                isActive={!part}
+                isActive={name === 'groceryList'}
                 onPress={() => navigation.navigate('groceryList', {id})}
             />
             {Object.values(parts).map(({id: partId, steps, title}) => {
                 const isActivePart = partId === part;
                 return (
-                    <View>
+                    <View key={partId}>
                         <Title style={{marginBottom: 10}} size="h5">
                             {title}
                         </Title>
@@ -100,13 +82,10 @@ const CustomDrawerContent = ({
                                 <MenuItem
                                     key={idx}
                                     onPress={() =>
-                                        navigation.push('process', {
-                                            screen: 'step',
-                                            params: {
-                                                id,
-                                                stepIdx: idx,
-                                                part: partId,
-                                            },
+                                        navigation.jumpTo('step', {
+                                            id,
+                                            stepIdx: idx,
+                                            part: partId,
                                         })
                                     }
                                     isActive={isActive}
@@ -121,27 +100,16 @@ const CustomDrawerContent = ({
     );
 };
 
-const ProcessStack = props => {
-    const {
-        params: {params},
-    } = useRoute();
+const ProcessStack = () => {
     return (
         <Drawer.Navigator
-            drawerContent={props => (
-                <CustomDrawerContent
-                    id={params.id}
-                    stepIdx={params.stepIdx || 0}
-                    part={params.part}
-                    {...props}
-                />
-            )}
+            drawerContent={CustomDrawerContent}
             initialRouteName="groceryList"
             screenOptions={{
-                header: ({
-                    navigation: {openDrawer, getParent, navigate},
-                    route: {params, name},
-                }) => {
+                header: ({navigation: {openDrawer, getParent}, route}) => {
+                    const {params, name} = route;
                     const parent = getParent();
+                    const part = params && 'part' in params && params?.part;
                     return (
                         <Header>
                             <IconButton
@@ -150,16 +118,15 @@ const ProcessStack = props => {
                                 icon={<MaterialIcons name="menu" size={28} />}
                             />
                             <Title size="h4" bold>
-                                {name === 'groceryList'
-                                    ? 'Список продуктов'
-                                    : cardsItems[params.id].parts[params.part]
-                                          .title}
+                                {name === 'step' && part
+                                    ? cardsItems[params?.id].parts[part].title
+                                    : 'Список продуктов'}
                             </Title>
                             <IconButton
                                 style={styles.button}
                                 onPress={() =>
                                     parent?.navigate('preview', {
-                                        id: params.id,
+                                        id: params?.id,
                                     })
                                 }
                                 icon={<MaterialIcons name="close" size={28} />}

@@ -3,13 +3,11 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React from 'react';
 import {Image, StyleSheet, View} from 'react-native';
 import {cardsItems} from '../../../data';
-import {RecipeStackParamList} from '../recipeStack';
-import {ProcessStackParamList} from './processStack';
 import MainTemplate from '../../../templates/main';
-import {Header} from 'react-native/Libraries/NewAppScreen';
 import Title from '../../../components/typography/title';
 import Button from '../../../components/button/button';
 import {Text} from 'react-native-elements';
+import { ProcessStackParamList } from '../../../types/navigation';
 
 type Props = NativeStackScreenProps<ProcessStackParamList, 'step'>;
 
@@ -32,8 +30,6 @@ const RecipeStep = ({
         : parts[currentPartIdx + 1]
         ? {id, part: parts[currentPartIdx + 1].id, stepIdx: 0}
         : null;
-
-    console.log(nextStep, steps);
 
     return (
         <MainTemplate>

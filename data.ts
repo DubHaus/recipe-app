@@ -54,7 +54,6 @@ export const cardsItems = {
                         images: [
                             'https://static.1000.menu/img/content-v2/19/17/44000/lazanya-klassicheskaya-s-farshem-v-duxovke_1583924369_2_max.jpg',
                         ],
-                        order: 1,
                     },
                     {
                         title: 'Подготовить лук',
@@ -62,7 +61,6 @@ export const cardsItems = {
                         images: [
                             'https://static.1000.menu/img/content-v2/19/17/44000/lazanya-klassicheskaya-s-farshem-v-duxovke_1584017693_3_max.jpg',
                         ],
-                        order: 2,
                     },
                     {
                         title: 'Жарим мясо',
@@ -70,7 +68,7 @@ export const cardsItems = {
                         images: [
                             'https://static.1000.menu/img/content-v2/19/17/44000/lazanya-klassicheskaya-s-farshem-v-duxovke_1583924369_4_max.jpg',
                         ],
-                        order: 3,
+                        timer: 300
                     },
                     {
                         title: 'Жарим овощи',
@@ -78,7 +76,6 @@ export const cardsItems = {
                         images: [
                             'https://static.1000.menu/img/content-v2/19/17/44000/lazanya-klassicheskaya-s-farshem-v-duxovke_1583924369_5_max.jpg',
                         ],
-                        order: 2,
                     },
                     {
                         title: 'Тушить овощи и мясо',
@@ -86,7 +83,7 @@ export const cardsItems = {
                         images: [
                             'https://static.1000.menu/img/content-v2/19/17/44000/lazanya-klassicheskaya-s-farshem-v-duxovke_1583924369_6_max.jpg',
                         ],
-                        order: 2,
+                        timer: 600
                     },
                 ],
             },
@@ -100,7 +97,6 @@ export const cardsItems = {
                         images: [
                             'https://static.1000.menu/img/content-v2/19/17/44000/lazanya-klassicheskaya-s-farshem-v-duxovke_1583924369_7_max.jpg',
                         ],
-                        order: 1,
                     },
                     {
                         title: 'Обжарить муку',
@@ -108,7 +104,6 @@ export const cardsItems = {
                         images: [
                             'https://static.1000.menu/img/content-v2/19/17/44000/lazanya-klassicheskaya-s-farshem-v-duxovke_1583924369_8_max.jpg',
                         ],
-                        order: 1,
                     },
                     {
                         title: 'Добавить молоко',
@@ -116,7 +111,6 @@ export const cardsItems = {
                         images: [
                             'https://static.1000.menu/img/content-v2/19/17/44000/lazanya-klassicheskaya-s-farshem-v-duxovke_1583924369_9_max.jpg',
                         ],
-                        order: 1,
                     },
                     {
                         title: 'Начать делать запекание',
@@ -124,7 +118,6 @@ export const cardsItems = {
                         images: [
                             'https://static.1000.menu/img/content-v2/19/17/44000/lazanya-klassicheskaya-s-farshem-v-duxovke_1583924369_10_max.jpg',
                         ],
-                        order: 1,
                     },
                     {
                         title: 'Выложить листы',
@@ -132,7 +125,6 @@ export const cardsItems = {
                         images: [
                             'https://static.1000.menu/img/content-v2/19/17/44000/lazanya-klassicheskaya-s-farshem-v-duxovke_1583924369_11_max.jpg',
                         ],
-                        order: 1,
                     },
                     {
                         title: 'Присыпать его слегка тёртым сыром',
@@ -140,15 +132,13 @@ export const cardsItems = {
                         images: [
                             'https://static.1000.menu/img/content-v2/19/17/44000/lazanya-klassicheskaya-s-farshem-v-duxovke_1583924369_12_max.jpg',
                         ],
-                        order: 1,
                     },
                     {
-                        title: 'part-1',
+                        title: 'Сделать все слои',
                         text: '1.Залить фарш соусом. \n2.Повторить все слои пока не заполнится форма. \n3.Последний слой с листами нужно очень хорошо залить соусом, особенно края, иначе есть вероятность, что лист теста засохнет и пригорит в процессе приготовления.',
                         images: [
                             'https://static.1000.menu/img/content-v2/19/17/44000/lazanya-klassicheskaya-s-farshem-v-duxovke_1583924369_14_max.jpg',
                         ],
-                        order: 1,
                     },
                     {
                         title: 'Завершающий слой',
@@ -156,7 +146,6 @@ export const cardsItems = {
                         images: [
                             'https://static.1000.menu/img/content-v2/19/17/44000/lazanya-klassicheskaya-s-farshem-v-duxovke_1583924369_15_max.jpg',
                         ],
-                        order: 1,
                     },
                     {
                         title: 'Запечь лазанью',
@@ -164,7 +153,7 @@ export const cardsItems = {
                         images: [
                             'https://static.1000.menu/img/content-v2/19/17/44000/lazanya-klassicheskaya-s-farshem-v-duxovke_1583911843_1_max.jpg',
                         ],
-                        order: 1,
+                        timer: 30,
                     },
                 ],
             },
@@ -194,7 +183,7 @@ export type TStep = {
     title: string;
     text: string;
     images: string[];
-    order: number;
+    timer?: number;
 };
 
 export type TgroceryListItem = {

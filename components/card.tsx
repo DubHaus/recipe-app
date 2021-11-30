@@ -6,13 +6,19 @@ import {MaterialIcons} from '@expo/vector-icons';
 import IconButton from './button/iconButton';
 import Title from './typography/title';
 import {useLinkProps} from '@react-navigation/native';
-import {RootStackParamList} from '../App';
+import {RootStackParamList} from '../types/navigation';
 
 type Props = {title: string; id: string};
 
 const Card = ({title, id}: Props) => {
     const {onPress} = useLinkProps<RootStackParamList>({
-        to: {screen: 'recipe', params: {id}},
+        to: {
+            screen: 'recipe',
+            params: {
+                screen: 'preview',
+                params: {id},
+            },
+        },
     });
     return (
         <Pressable onPress={onPress} style={styles.container}>
@@ -36,9 +42,7 @@ const Card = ({title, id}: Props) => {
                     <Title size="h6">{title}</Title>
                 </View>
                 <View style={styles.descriptionItem}>
-                    <Text style={{fontSize: 9}}>
-                        Средиземноморская
-                    </Text>
+                    <Text style={{fontSize: 9}}>Средиземноморская</Text>
                 </View>
                 <View style={styles.descriptionItem}>
                     <View style={styles.params}>

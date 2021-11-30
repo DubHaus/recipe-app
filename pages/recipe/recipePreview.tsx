@@ -9,9 +9,8 @@ import Title from '../../components/typography/title';
 import {cardsItems, measures} from '../../data';
 import MainTemplate from '../../templates/main';
 import Header from '../../components/header';
-import {RecipeStackParamList} from './recipeStack';
-import {RootStackParamList} from '../../App';
 import Button from '../../components/button/button';
+import {RecipeStackParamList} from '../../types/navigation';
 
 type InfoPorps = {
     time: number;
@@ -40,11 +39,15 @@ const Info = ({time, difficultyLevel, calories, diets}: InfoPorps) => (
     </View>
 );
 
-type RecipePreviewProps = {id: string};
-
 type NavigationProps = NativeStackScreenProps<RecipeStackParamList>;
 
-const RecipePreview = ({id}: RecipePreviewProps) => {
+type Props = NativeStackScreenProps<RecipeStackParamList, 'preview'>;
+
+const RecipePreview = ({
+    route: {
+        params: {id},
+    },
+}: Props) => {
     const {
         desciption,
         time,
@@ -92,8 +95,9 @@ const RecipePreview = ({id}: RecipePreviewProps) => {
                         <View key={id}>
                             <Text style={styles.title}>{title}</Text>
                             {Object.values(groceryList[id]).map(
-                                ({title, measure, count}) => (
+                                ({title, measure, count}, idx) => (
                                     <Text
+                                        key={idx}
                                         style={{
                                             ...styles.text,
                                             lineHeight: 27,
