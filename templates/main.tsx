@@ -10,8 +10,10 @@ const MainTemplate = ({
     style?: ViewStyle;
 }) => {
     return (
-        <ScrollView style={style}>
-            <Wrapper style={{paddingVertical: 20}}>{children}</Wrapper>
+        <ScrollView contentContainerStyle={{flexGrow: 1, minHeight: '100%'}}>
+            <Wrapper style={{paddingVertical: 20, ...style}}>
+                {children}
+            </Wrapper>
         </ScrollView>
     );
 };

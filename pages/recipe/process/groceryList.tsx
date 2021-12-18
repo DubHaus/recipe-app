@@ -9,7 +9,7 @@ import Row from '../../../components/row';
 import Checkbox from '../../../components/checkbox';
 import Title from '../../../components/typography/title';
 import Button from '../../../components/button/button';
-import { ProcessStackParamList } from '../../../types/navigation';
+import {ProcessStackParamList} from '../../../types/navigation';
 
 type Props = NativeStackScreenProps<ProcessStackParamList, 'groceryList'>;
 
@@ -29,17 +29,25 @@ const GroceryList = ({
     }));
 
     return (
-        <MainTemplate>
-            {groceryListParts.map(({title, list}, idx) => (
-                <View key={idx} style={{marginBottom: 20}}>
-                    <Title style={{marginBottom: 15}} size="h4">
-                        {title}
-                    </Title>
-                    {list.map((props, idx) => (
-                        <GroceryListItem key={idx} {...props} />
-                    ))}
-                </View>
-            ))}
+        <MainTemplate
+            style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                height: '100%',
+            }}>
+            <View>
+                {groceryListParts.map(({title, list}, idx) => (
+                    <View key={idx} style={{marginBottom: 20}}>
+                        <Title style={{marginBottom: 15}} size="h4">
+                            {title}
+                        </Title>
+                        {list.map((props, idx) => (
+                            <GroceryListItem key={idx} {...props} />
+                        ))}
+                    </View>
+                ))}
+            </View>
             <Button
                 title="Начать готовить"
                 onPress={() =>

@@ -1,13 +1,31 @@
-import {Link, StackActions} from '@react-navigation/native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React from 'react';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
+
 import {Image, StyleSheet, View} from 'react-native';
 import {cardsItems} from '../../../data';
 import MainTemplate from '../../../templates/main';
 import Title from '../../../components/typography/title';
 import Button from '../../../components/button/button';
 import {Text} from 'react-native-elements';
-import { ProcessStackParamList } from '../../../types/navigation';
+import {ProcessStackParamList} from '../../../types/navigation';
+
+// const notification = () => {
+//     PushNotificationIOS.requestPermissions()
+//     PushNotificationIOS.checkPermissions(console.log);
+
+//     PushNotificationIOS.addNotificationRequest({
+//         id: 'id01',
+//         title: 'Hello from notifications',
+//         body: 'Hello ...',
+//         fireDate: new Date(Date.now() + 10 * 1000),
+//         repeats: false,
+//     });
+// };
+
+// function addMinutes(date: Date, minutes: number) {
+//     return new Date(date.getTime() + minutes * 60000);
+// }
 
 type Props = NativeStackScreenProps<ProcessStackParamList, 'step'>;
 
@@ -32,14 +50,14 @@ const RecipeStep = ({
         : null;
 
     return (
-        <MainTemplate>
-            <View
-                style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    minHeight: 470,
-                }}>
+        <MainTemplate
+            style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                height: '100%',
+            }}>
+            <View>
                 <Title style={styles.title} size="h4">
                     {stepTitle}
                 </Title>
@@ -55,25 +73,25 @@ const RecipeStep = ({
                         ))}
                     </View>
                 </View>
-                {nextStep ? (
-                    <Button
-                        title="Следующий шаг"
-                        onPress={() =>
-                            navigation.push('process', {
-                                screen: 'step',
-                                params: nextStep,
-                            })
-                        }
-                    />
-                ) : (
-                    <Button
-                        title="Закончить рецепт"
-                        onPress={() =>
-                            navigation?.getParent()?.navigate('congrats', {id})
-                        }
-                    />
-                )}
             </View>
+            {nextStep ? (
+                <Button
+                    title="Следующий шаг"
+                    onPress={() => {
+                        navigation.push('process', {
+                            screen: 'step',
+                            params: nextStep,
+                        });
+                    }}
+                />
+            ) : (
+                <Button
+                    title="Закончить рецепт"
+                    onPress={() =>
+                        navigation?.getParent()?.navigate('congrats', {id})
+                    }
+                />
+            )}
         </MainTemplate>
     );
 };

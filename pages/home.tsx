@@ -23,15 +23,13 @@ const iconsToPages = {
 const HomeComponent = () => {
     return (
         <MainTemplate>
-            <View>
-                <Title size="h4">Последние рецепты</Title>
-                <View style={styles.items}>
-                    {Object.values(cardsItems).map(el => (
-                        <Column key={el.id} size={3}>
-                            <Card key={el.id} id={el.id} title={el.title} />
-                        </Column>
-                    ))}
-                </View>
+            <Title size="h4">Последние рецепты</Title>
+            <View style={styles.items}>
+                {Object.values(cardsItems).map(el => (
+                    <Column key={el.id} size={3}>
+                        <Card key={el.id} id={el.id} title={el.title} />
+                    </Column>
+                ))}
             </View>
         </MainTemplate>
     );

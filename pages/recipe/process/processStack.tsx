@@ -22,88 +22,14 @@ import {
     RecipeStackParamList,
     RootStackParamList,
 } from '../../../types/navigation';
+import Menu from '../../../components/menu/menu';
 
 const Drawer = createDrawerNavigator<ProcessStackParamList>();
-
-const MenuItem = ({
-    title,
-    isActive,
-    onPress,
-}: {
-    title: string;
-    isActive?: boolean;
-    onPress: () => void;
-}) => (
-    <Pressable style={{height: 35}} onPress={onPress}>
-        <Row
-            style={{
-                justifyContent: 'flex-start',
-            }}>
-            <MaterialIcons
-                style={{marginRight: 5, width: 16}}
-                size={8}
-                color={isActive ? 'black' : 'transparent'}
-                name="stop-circle"
-            />
-            <Text style={{fontSize: 16}}>{title}</Text>
-        </Row>
-    </Pressable>
-);
-
-const CustomDrawerContent = ({
-    navigation,
-    state,
-    ...props
-}: DrawerContentComponentProps) => {
-    const {
-        name,
-        params: {id, part, stepIdx = 0},
-    } = state.routes[state.index];
-    const {parts} = cardsItems['1'];
-    return (
-        <DrawerContentScrollView
-            style={{paddingVertical: 20, paddingHorizontal: 5}}
-            {...props}>
-            <MenuItem
-                title="Список продуктов"
-                isActive={name === 'groceryList'}
-                onPress={() => navigation.navigate('groceryList', {id})}
-            />
-            {Object.values(parts).map(({id: partId, steps, title}) => {
-                const isActivePart = partId === part;
-                return (
-                    <View key={partId}>
-                        <Title style={{marginBottom: 10}} size="h5">
-                            {title}
-                        </Title>
-                        {steps.map(({title}, idx) => {
-                            const isActive = isActivePart && idx === stepIdx;
-                            return (
-                                <MenuItem
-                                    key={idx}
-                                    onPress={() =>
-                                        navigation.jumpTo('step', {
-                                            id,
-                                            stepIdx: idx,
-                                            part: partId,
-                                        })
-                                    }
-                                    isActive={isActive}
-                                    title={title}
-                                />
-                            );
-                        })}
-                    </View>
-                );
-            })}
-        </DrawerContentScrollView>
-    );
-};
 
 const ProcessStack = () => {
     return (
         <Drawer.Navigator
-            drawerContent={CustomDrawerContent}
+            drawerContent={Menu}
             initialRouteName="groceryList"
             screenOptions={{
                 header: ({navigation: {openDrawer, getParent}, route}) => {

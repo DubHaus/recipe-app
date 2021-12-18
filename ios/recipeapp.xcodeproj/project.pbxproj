@@ -353,7 +353,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "recipe-app";
+				PRODUCT_BUNDLE_IDENTIFIER = "recipe-app-2";
 				PRODUCT_NAME = "recipe-app";
 				SWIFT_OBJC_BRIDGING_HEADER = "recipeapp/recipeapp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
