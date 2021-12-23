@@ -5,7 +5,7 @@ import {MaterialIcons} from '@expo/vector-icons';
 import {Text} from 'react-native-elements';
 
 import Row from '../row';
-import {TMaterialIcons} from '../../App';
+import {TMaterialIcons} from '../../../App';
 
 type Props = {
     title: string;

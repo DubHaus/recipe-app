@@ -11,8 +11,8 @@ export const measures = {
 
 export const diets = [{id: '1', title: 'Средиземноморская'}];
 
-export const cardsItems = {
-    '1': {
+export const cardsItems: TRecipe[] = [
+    {
         id: '1',
         title: 'Лазанья',
         desciption: `Лазанья классическая - вид итальянской пасты, представляющее из себя пласты теста их твёрдых сортов пшеницы, которые прослаивают разнообразной начинкой и запекают. Лазанья — это традиционное блюдо итальянской кухни, и существует множество вариантов его приготовления.`,
@@ -20,33 +20,26 @@ export const cardsItems = {
         time: 40,
         calories: 115,
         diets: [],
-        groceryList: {
-            farsh: [
-                {
-                    title: 'Фарш мясной',
-                    measure: 'gr',
-                    count: 800,
-                },
-                {title: 'Помидоры', measure: 'count', count: 2},
-                {title: 'Лук (небольшой)', measure: 'count', count: 2},
-                {title: 'Листы лазаньи', measure: 'count', count: 10},
-                {title: 'Чеснок', measure: 'zub', count: 2},
-                {title: 'Томатная паста', measure: 'spoon', count: 2},
-                {title: 'Твёрдый сыр', measure: 'gr', count: 100},
-                {title: 'Растительное масло', measure: 'spoon', count: 1},
-                {title: 'Соль'},
-            ],
-            sauce: [
-                {title: 'Сливочное масло', measure: 'gr', count: 50},
-                {title: 'Молоко', measure: 'ml', count: 600},
-                {title: 'Мука (без горки)', measure: 'spoon', count: 5},
-                {title: 'Душистый перец'},
-            ],
-        },
-        parts: {
-            farsh: {
+        image: 'https://tmbidigitalassetsazure.blob.core.windows.net/rms3-prod/attachments/37/1200x1200/Pizza-from-Scratch_EXPS_FT20_8621_F_0505_1_home.jpg',
+        parts: [
+            {
                 id: 'farsh',
                 title: 'Подготовить мясо',
+                groceryList: [
+                    {
+                        title: 'Фарш мясной',
+                        measure: 'gr',
+                        count: 800,
+                    },
+                    {title: 'Помидоры', measure: 'count', count: 2},
+                    {title: 'Лук (небольшой)', measure: 'count', count: 2},
+                    {title: 'Листы лазаньи', measure: 'count', count: 10},
+                    {title: 'Чеснок', measure: 'zub', count: 2},
+                    {title: 'Томатная паста', measure: 'spoon', count: 2},
+                    {title: 'Твёрдый сыр', measure: 'gr', count: 100},
+                    {title: 'Растительное масло', measure: 'spoon', count: 1},
+                    {title: 'Соль'},
+                ],
                 steps: [
                     {
                         title: 'Подготовить продукты.                        ',
@@ -68,7 +61,7 @@ export const cardsItems = {
                         images: [
                             'https://static.1000.menu/img/content-v2/19/17/44000/lazanya-klassicheskaya-s-farshem-v-duxovke_1583924369_4_max.jpg',
                         ],
-                        timer: 300
+                        timer: 300,
                     },
                     {
                         title: 'Жарим овощи',
@@ -83,13 +76,19 @@ export const cardsItems = {
                         images: [
                             'https://static.1000.menu/img/content-v2/19/17/44000/lazanya-klassicheskaya-s-farshem-v-duxovke_1583924369_6_max.jpg',
                         ],
-                        timer: 600
+                        timer: 600,
                     },
                 ],
             },
-            sauce: {
+            {
                 id: 'sauce',
                 title: 'Соус Бешамель',
+                groceryList: [
+                    {title: 'Сливочное масло', measure: 'gr', count: 50},
+                    {title: 'Молоко', measure: 'ml', count: 600},
+                    {title: 'Мука (без горки)', measure: 'spoon', count: 5},
+                    {title: 'Душистый перец'},
+                ],
                 steps: [
                     {
                         title: 'Растопить масло',
@@ -157,26 +156,27 @@ export const cardsItems = {
                     },
                 ],
             },
-        },
+        ],
     },
-} as {
-    [id: string]: {
-        id: string;
-        title: string;
-        desciption: string;
-        difficultyLevel: number;
-        time: number;
-        calories: number;
-        diets: string[];
-        groceryList: {[id: string]: TgroceryListItem[]};
-        parts: {
-            [id: string]: {
-                id: string;
-                title: string;
-                steps: TStep[];
-            };
-        };
-    };
+];
+
+export type TRecipe = {
+    id: string;
+    title: string;
+    desciption: string;
+    difficultyLevel: number;
+    time: number;
+    calories: number;
+    diets: string[];
+    parts: TPart[];
+    image: string;
+};
+
+export type TPart = {
+    id: string;
+    title: string;
+    steps: TStep[];
+    groceryList: TgroceryListItem[];
 };
 
 export type TStep = {
@@ -184,6 +184,7 @@ export type TStep = {
     text: string;
     images: string[];
     timer?: number;
+    done?: boolean;
 };
 
 export type TgroceryListItem = {

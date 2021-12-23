@@ -24,7 +24,7 @@ export type ProcessStackParamList = {
     };
     step: {
         id: string;
-        stepIdx: number;
-        part?: string;
+        step: number;
+        part: number;
     };
 };

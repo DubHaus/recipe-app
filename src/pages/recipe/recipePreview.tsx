@@ -1,16 +1,14 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
-import {MaterialIcons} from '@expo/vector-icons';
+import {useNavigation} from '@react-navigation/native';
+import {useRecoilValue} from 'recoil';
 
-import {Link, useNavigation} from '@react-navigation/native';
-
-import Title from '../../components/typography/title';
-import {cardsItems, measures} from '../../data';
-import MainTemplate from '../../templates/main';
-import Header from '../../components/header';
+import {measures} from '../../data';
 import Button from '../../components/button/button';
 import {RecipeStackParamList} from '../../types/navigation';
+import {currentRecipeSelector} from '../../state/recipePageNavigation';
+import MainTemplate from '../../templates/main';
 
 type InfoPorps = {
     time: number;
@@ -48,31 +46,26 @@ const RecipePreview = ({
         params: {id},
     },
 }: Props) => {
-    const {
-        desciption,
-        time,
-        difficultyLevel,
-        calories,
-        diets,
-        parts,
-        groceryList,
-    } = cardsItems[id];
-
+    const info = useRecoilValue(currentRecipeSelector);
     const navigation = useNavigation<NavigationProps['navigation']>();
+
+    if (!info) {
+        return null;
+    }
+
+    const {desciption, time, difficultyLevel, calories, diets, parts, image} =
+        info;
 
     return (
         <MainTemplate>
             <View>
                 <View style={styles.section}>
                     <View style={styles.images}>
-                        <Image
-                            style={styles.image}
-                            source={require('../../assets/images/pizza-1.jpeg')}
-                        />
+                        <Image style={styles.image} source={{uri: image}} />
                         <View style={styles.smallImages}>
                             <Image
                                 style={styles.smallImage}
-                                source={require('../../assets/images/pizza-1.jpeg')}
+                                source={{uri: image}}
                             />
                         </View>
                     </View>
@@ -91,23 +84,19 @@ const RecipePreview = ({
                 </View>
                 <View style={styles.section}>
                     <Text style={styles.title}>Список продуктов</Text>
-                    {Object.values(parts).map(({title, id}) => (
+                    {parts.map(({title, id, groceryList}) => (
                         <View key={id}>
                             <Text style={styles.title}>{title}</Text>
-                            {Object.values(groceryList[id]).map(
-                                ({title, measure, count}, idx) => (
-                                    <Text
-                                        key={idx}
-                                        style={{
-                                            ...styles.text,
-                                            lineHeight: 27,
-                                        }}>{`\u2022 ${title} ${count || ''} ${
-                                        measure
-                                            ? measures[measure].shortTitle
-                                            : ''
-                                    }`}</Text>
-                                )
-                            )}
+                            {groceryList.map(({title, measure, count}, idx) => (
+                                <Text
+                                    key={idx}
+                                    style={{
+                                        ...styles.text,
+                                        lineHeight: 27,
+                                    }}>{`\u2022 ${title} ${count || ''} ${
+                                    measure ? measures[measure].shortTitle : ''
+                                }`}</Text>
+                            ))}
                         </View>
                     ))}
                 </View>

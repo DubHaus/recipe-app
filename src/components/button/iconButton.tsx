@@ -2,7 +2,7 @@ import React, {ReactNode} from 'react';
 import {Pressable, StyleSheet, ViewStyle} from 'react-native';
 
 import {MaterialIcons} from '@expo/vector-icons';
-import {TMaterialIcons} from '../../App';
+import {TMaterialIcons} from '../../../App';
 
 type IconButtonProps = {
     icon: ReactNode;

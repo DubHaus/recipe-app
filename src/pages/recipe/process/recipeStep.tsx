@@ -3,12 +3,18 @@ import React from 'react';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 import {Image, StyleSheet, View} from 'react-native';
-import {cardsItems} from '../../../data';
 import MainTemplate from '../../../templates/main';
 import Title from '../../../components/typography/title';
 import Button from '../../../components/button/button';
 import {Text} from 'react-native-elements';
 import {ProcessStackParamList} from '../../../types/navigation';
+import {useRecoilState, useRecoilValue, useSetRecoilState} from 'recoil';
+import {
+    currentRecipeSelector,
+    recipePageNavigationState,
+} from '../../../state/recipePageNavigation';
+import {recipeStepAtom, recipeStepState} from '../../../state/recipes';
+import {TStep} from '../../../data';
 
 // const notification = () => {
 //     PushNotificationIOS.requestPermissions()
@@ -31,22 +37,28 @@ type Props = NativeStackScreenProps<ProcessStackParamList, 'step'>;
 
 const RecipeStep = ({
     route: {
-        params: {id, part: partId, stepIdx = 0},
+        params: {id, part, step},
     },
     navigation,
 }: Props) => {
-    const parts = Object.values(cardsItems[id].parts);
-    const currentPartIdx = parts.findIndex(part => partId === part.id);
-    const {steps} = parts[currentPartIdx];
-    const {title: stepTitle, text, images} = steps[stepIdx];
+    const {parts = []} = useRecoilValue(currentRecipeSelector) || {};
+    const [navigationData, setNavigationData] = useRecoilState(
+        recipePageNavigationState
+    );
+    const setRecipeStepState = useSetRecoilState<TStep>(
+        recipeStepAtom(navigationData)
+    );
+
+    const {steps} = parts[part];
+    const {title: stepTitle, text, images} = steps[step];
 
     const mainImage = images[0];
     const restImages = images.slice(1);
 
-    const nextStep = steps[stepIdx + 1]
-        ? {id, part: partId, stepIdx: stepIdx + 1}
-        : parts[currentPartIdx + 1]
-        ? {id, part: parts[currentPartIdx + 1].id, stepIdx: 0}
+    const nextStep = steps[step + 1]
+        ? {id, part, step: step + 1}
+        : parts[part + 1]
+        ? {id, part: part + 1, step: 0}
         : null;
 
     return (
@@ -78,6 +90,8 @@ const RecipeStep = ({
                 <Button
                     title="Следующий шаг"
                     onPress={() => {
+                        setNavigationData(nextStep);
+                        setRecipeStepState(step => ({...step, done: true}));
                         navigation.push('process', {
                             screen: 'step',
                             params: nextStep,

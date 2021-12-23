@@ -8,9 +8,17 @@ import Title from './typography/title';
 import {useLinkProps} from '@react-navigation/native';
 import {RootStackParamList} from '../types/navigation';
 
-type Props = {title: string; id: string};
+import {useSetRecoilState} from 'recoil';
+import {recipePageNavigationState} from '../state/recipePageNavigation';
 
-const Card = ({title, id}: Props) => {
+type Props = {
+    title: string;
+    id: string;
+    image: string;
+};
+
+const Card = ({title, id, image}: Props) => {
+    const setNavigation = useSetRecoilState(recipePageNavigationState);
     const {onPress} = useLinkProps<RootStackParamList>({
         to: {
             screen: 'recipe',
@@ -20,11 +28,15 @@ const Card = ({title, id}: Props) => {
             },
         },
     });
+
+    const onClick = () => {
+        setNavigation(oldNav => ({...oldNav, id}));
+        onPress();
+    };
+
     return (
-        <Pressable onPress={onPress} style={styles.container}>
-            <ImageBackground
-                style={styles.image}
-                source={require('./../assets/images/pizza-1.jpeg')}>
+        <Pressable onPress={onClick} style={styles.container}>
+            <ImageBackground style={styles.image} source={{uri: image}}>
                 <IconButton
                     style={styles.iconButton}
                     onPress={() => {}}
