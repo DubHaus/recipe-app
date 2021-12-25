@@ -25,15 +25,22 @@ import Menu from '../../../components/menu/menu';
 import {useRecoilState, useRecoilValue} from 'recoil';
 import {
     currentRecipeSelector,
-    currentRecipeStepSelector,
+    currentRecipePartSelector,
     recipePageNavigationState,
+    currentRecipeStepSelector,
 } from '../../../state/recipePageNavigation';
+import Timer from '../../../components/timer';
 
 const Drawer = createDrawerNavigator<ProcessStackParamList>();
 
 const ProcessStack = () => {
     const {parts = []} = useRecoilValue(currentRecipeSelector) || {};
-    const {title} = useRecoilValue(currentRecipeStepSelector) || {};
+    const {title, id} = useRecoilValue(currentRecipePartSelector) || {};
+    const {
+        timer,
+        title: stepTitle,
+        done,
+    } = useRecoilValue(currentRecipeStepSelector) || {};
     const [navigationData, setNavigationData] = useRecoilState(
         recipePageNavigationState
     );
@@ -55,25 +62,41 @@ const ProcessStack = () => {
                     const parent = getParent();
 
                     return (
-                        <Header>
-                            <IconButton
-                                style={styles.button}
-                                onPress={openDrawer}
-                                icon={<MaterialIcons name="menu" size={28} />}
-                            />
-                            <Title size="h4" bold>
-                                {name === 'step' ? title : 'Список продуктов'}
-                            </Title>
-                            <IconButton
-                                style={styles.button}
-                                onPress={() =>
-                                    parent?.navigate('preview', {
-                                        id: navigationData.id,
-                                    })
-                                }
-                                icon={<MaterialIcons name="close" size={28} />}
-                            />
-                        </Header>
+                        <>
+                            <Header>
+                                <IconButton
+                                    style={styles.button}
+                                    onPress={openDrawer}
+                                    icon={
+                                        <MaterialIcons name="menu" size={28} />
+                                    }
+                                />
+                                <Title size="h4" bold>
+                                    {name === 'step'
+                                        ? title
+                                        : 'Список продуктов'}
+                                </Title>
+                                <IconButton
+                                    style={styles.button}
+                                    onPress={() =>
+                                        parent?.navigate('preview', {
+                                            id: navigationData.id,
+                                        })
+                                    }
+                                    icon={
+                                        <MaterialIcons name="close" size={28} />
+                                    }
+                                />
+                            </Header>
+                            {name === 'step' && !done && timer && (
+                                <Timer
+                                    style={{marginHorizontal: 16}}
+                                    time={timer}
+                                    stepTitle={stepTitle}
+                                    id={`${id}-${timer}`}
+                                />
+                            )}
+                        </>
                     );
                 },
             }}>

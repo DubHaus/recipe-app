@@ -9,11 +9,7 @@ import Title from '../typography/title';
 import MenuItem from './menuItem';
 import Subtitle from './subtitle';
 import {useRecoilState, useRecoilValue} from 'recoil';
-import {
-    currentRecipeSelector,
-    recipePageNavigationState,
-    TRecipePageNavigation,
-} from '../../state/recipePageNavigation';
+import {TRecipePageNavigation} from '../../state/recipePageNavigation';
 import {TPart} from '../../data';
 import {recipeStepAtom} from '../../state/recipes';
 

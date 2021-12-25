@@ -10,8 +10,6 @@ type IconButtonProps = {
     onPress: () => void;
 };
 
-type IconProps = React.ComponentProps<typeof MaterialIcons>;
-
 const IconButton = ({
     style: propStyles = {},
     icon,

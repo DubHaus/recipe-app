@@ -2,12 +2,15 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {useRecoilValue} from 'recoil';
+import {useRecoilValue, useSetRecoilState} from 'recoil';
 
 import {measures} from '../../data';
 import Button from '../../components/button/button';
 import {RecipeStackParamList} from '../../types/navigation';
-import {currentRecipeSelector} from '../../state/recipePageNavigation';
+import {
+    currentRecipeSelector,
+    recipePageNavigationState,
+} from '../../state/recipePageNavigation';
 import MainTemplate from '../../templates/main';
 
 type InfoPorps = {
@@ -19,20 +22,18 @@ type InfoPorps = {
 const Info = ({time, difficultyLevel, calories, diets}: InfoPorps) => (
     <View>
         <View style={styles.line}>
-            <Text style={{lineHeight: 27}}>Сложность</Text>
-            <Text>{difficultyLevel}</Text>
+            <Text style={[{lineHeight: 27}, styles.text]}>Сложность</Text>
+            <Text style={styles.text}>{difficultyLevel}</Text>
         </View>
         <View style={styles.line}>
-            <Text style={{lineHeight: 27}}>Время приготовления</Text>
-            <Text>{time}</Text>
+            <Text style={[{lineHeight: 27}, styles.text]}>
+                Время приготовления
+            </Text>
+            <Text style={styles.text}>{time}</Text>
         </View>
         <View style={styles.line}>
-            <Text style={{lineHeight: 27}}>Каллории</Text>
-            <Text>{calories}</Text>
-        </View>
-        <View style={styles.line}>
-            <Text style={{lineHeight: 27}}>Диета</Text>
-            <Text>{diets.join(' ,')}</Text>
+            <Text style={[{lineHeight: 27}, styles.text]}>Каллории</Text>
+            <Text style={styles.text}>{calories}</Text>
         </View>
     </View>
 );
@@ -48,6 +49,7 @@ const RecipePreview = ({
 }: Props) => {
     const info = useRecoilValue(currentRecipeSelector);
     const navigation = useNavigation<NavigationProps['navigation']>();
+    const setNavigation = useSetRecoilState(recipePageNavigationState);
 
     if (!info) {
         return null;
@@ -86,7 +88,7 @@ const RecipePreview = ({
                     <Text style={styles.title}>Список продуктов</Text>
                     {parts.map(({title, id, groceryList}) => (
                         <View key={id}>
-                            <Text style={styles.title}>{title}</Text>
+                            <Text style={styles.subtitle}>{title}</Text>
                             {groceryList.map(({title, measure, count}, idx) => (
                                 <Text
                                     key={idx}
@@ -103,12 +105,13 @@ const RecipePreview = ({
             </View>
             <Button
                 title="Начать готовить"
-                onPress={() =>
+                onPress={() => {
                     navigation.navigate('process', {
                         screen: 'groceryList',
                         params: {id},
-                    })
-                }
+                    });
+                    setNavigation({id, part: 0, step: 0});
+                }}
             />
         </MainTemplate>
     );
@@ -157,12 +160,17 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
     text: {
-        fontSize: 14,
+        fontSize: 16,
+    },
+    subtitle: {
+        fontSize: 18,
+        fontWeight: '500',
+        lineHeight: 35,
     },
     title: {
-        fontSize: 14,
+        fontSize: 20,
         fontWeight: '500',
-        lineHeight: 27,
+        lineHeight: 40,
     },
 });
 

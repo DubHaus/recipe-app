@@ -30,7 +30,7 @@ const Card = ({title, id, image}: Props) => {
     });
 
     const onClick = () => {
-        setNavigation(oldNav => ({...oldNav, id}));
+        setNavigation({id, part: 0, step: 0});
         onPress();
     };
 

@@ -1,6 +1,5 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React from 'react';
-import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 import {Image, StyleSheet, View} from 'react-native';
 import MainTemplate from '../../../templates/main';
@@ -15,23 +14,6 @@ import {
 } from '../../../state/recipePageNavigation';
 import {recipeStepAtom, recipeStepState} from '../../../state/recipes';
 import {TStep} from '../../../data';
-
-// const notification = () => {
-//     PushNotificationIOS.requestPermissions()
-//     PushNotificationIOS.checkPermissions(console.log);
-
-//     PushNotificationIOS.addNotificationRequest({
-//         id: 'id01',
-//         title: 'Hello from notifications',
-//         body: 'Hello ...',
-//         fireDate: new Date(Date.now() + 10 * 1000),
-//         repeats: false,
-//     });
-// };
-
-// function addMinutes(date: Date, minutes: number) {
-//     return new Date(date.getTime() + minutes * 60000);
-// }
 
 type Props = NativeStackScreenProps<ProcessStackParamList, 'step'>;
 

@@ -78,7 +78,6 @@ export default function App() {
 const RecipesProvider = ({children}: {children: ReactNode}) => {
     const setRecieps = useSetRecoilState(recipesState);
     useEffect(() => {
-        console.log('SET RECIPES', cardsItems);
         setRecieps(cardsItems);
     }, [setRecieps]);
 

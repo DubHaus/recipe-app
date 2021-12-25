@@ -61,7 +61,7 @@ export const cardsItems: TRecipe[] = [
                         images: [
                             'https://static.1000.menu/img/content-v2/19/17/44000/lazanya-klassicheskaya-s-farshem-v-duxovke_1583924369_4_max.jpg',
                         ],
-                        timer: 300,
+                        timer: 30,
                     },
                     {
                         title: 'Жарим овощи',

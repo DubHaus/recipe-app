@@ -35,10 +35,20 @@ export const currentRecipeSelector = selector({
     },
 });
 
-export const currentRecipeStepSelector = selector({
-    key: 'currentRecipeStepSelector',
+export const currentRecipePartSelector = selector({
+    key: 'currentRecipePartSelector',
     get: ({get}) => {
         const {id, part} = get(recipePageNavigationState);
         return get(recipesState).find(el => el.id === id)?.parts[part];
+    },
+});
+
+export const currentRecipeStepSelector = selector({
+    key: 'currentRecipeStepSelector',
+    get: ({get}) => {
+        const {id, part, step} = get(recipePageNavigationState);
+        return get(recipesState).find(el => el.id === id)?.parts[part].steps[
+            step
+        ];
     },
 });
