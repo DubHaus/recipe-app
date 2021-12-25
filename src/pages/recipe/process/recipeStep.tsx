@@ -56,17 +56,19 @@ const RecipeStep = ({
                     {stepTitle}
                 </Title>
                 <Text style={styles.text}>{text}</Text>
-                <View style={styles.images}>
-                    <Image style={styles.image} source={{uri: mainImage}} />
-                    <View style={styles.smallImages}>
-                        {restImages.map(src => (
-                            <Image
-                                style={styles.smallImage}
-                                source={{uri: src}}
-                            />
-                        ))}
+                {mainImage && (
+                    <View style={styles.images}>
+                        <Image style={styles.image} source={{uri: mainImage}} />
+                        <View style={styles.smallImages}>
+                            {restImages.map(src => (
+                                <Image
+                                    style={styles.smallImage}
+                                    source={{uri: src}}
+                                />
+                            ))}
+                        </View>
                     </View>
-                </View>
+                )}
             </View>
             {nextStep ? (
                 <Button

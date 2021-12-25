@@ -27,9 +27,9 @@ const HomeComponent = () => {
         <MainTemplate>
             <Title size="h4">Последние рецепты</Title>
             <View style={styles.items}>
-                {recipes.map(({id, title, image}) => (
+                {recipes.map(({id, title, images}) => (
                     <Column key={id} size={3}>
-                        <Card id={id} title={title} image={image} />
+                        <Card id={id} title={title} image={images[0]} />
                     </Column>
                 ))}
             </View>
