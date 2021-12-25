@@ -19,7 +19,7 @@ type InfoPorps = {
     calories: number;
     diets: string[];
 };
-const Info = ({time, difficultyLevel, calories, diets}: InfoPorps) => (
+const Info = ({time, difficultyLevel, calories}: InfoPorps) => (
     <View>
         <View style={styles.line}>
             <Text style={[{lineHeight: 27}, styles.text]}>Сложность</Text>
@@ -55,20 +55,25 @@ const RecipePreview = ({
         return null;
     }
 
-    const {desciption, time, difficultyLevel, calories, diets, parts, image} =
+    const {desciption, time, difficultyLevel, calories, diets, parts, images} =
         info;
+
+    const mainImage = images[0];
+    const restImages = images.slice(1);
 
     return (
         <MainTemplate>
             <View>
                 <View style={styles.section}>
                     <View style={styles.images}>
-                        <Image style={styles.image} source={{uri: image}} />
+                        <Image style={styles.image} source={{uri: mainImage}} />
                         <View style={styles.smallImages}>
-                            <Image
-                                style={styles.smallImage}
-                                source={{uri: image}}
-                            />
+                            {restImages.map(image => (
+                                <Image
+                                    style={styles.smallImage}
+                                    source={{uri: image}}
+                                />
+                            ))}
                         </View>
                     </View>
                 </View>
