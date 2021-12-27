@@ -60,7 +60,7 @@ export const cardsItems: TRecipe[] = [
                         images: [
                             'https://www.thedinnerbite.com/wp-content/uploads/2020/12/christmas-chicken-roast-img-11.jpg',
                         ],
-                        timer: 90,
+                        timer: 90 * 60,
                     },
                     {
                         title: 'Подготовить духовку',
@@ -106,7 +106,7 @@ export const cardsItems: TRecipe[] = [
                         images: [
                             'https://www.thedinnerbite.com/wp-content/uploads/2020/12/christmas-chicken-roast-img-18.jpg',
                         ],
-                        timer: 120,
+                        timer: 120 * 60,
                     },
                 ],
             },
